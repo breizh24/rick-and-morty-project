@@ -1,25 +1,63 @@
 :root {
-  --sky-rgb: 0, 181, 204;
-  --lime-rgb: 199, 245, 38;
+  --color-primary: 187deg 100% 40%;
+  --color-secondary: 73deg 91% 55%;
+  --color-text: 0deg 0% 20%;
+
+  --color-shadow: 123deg 26% 53%;
+
+  --color-card-bg: hsl(var(--color-primary) / 0.83);
 
   --font-size-sm: 0.875rem;
   --font-size-md: 1rem;
   --font-size-lg: 1.125rem;
   --font-size-xl: 1.3125rem;
   --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.75rem;
 
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 16px;
   --space-lg: 24px;
+
+  --border-radius: 6px;
+
+  --shadow-logo: 1px 1px 0.5px hsl(var(--color-shadow) / 0.65);
+  --shadow-elevation-medium: 0.3px 0.3px 0.5px hsl(var(--color-shadow) / 0.35),
+    0.9px 0.9px 1.4px -0.9px hsl(var(--color-shadow) / 0.33),
+    2.2px 2.3px 3.5px -1.8px hsl(var(--color-shadow) / 0.32),
+    5.5px 5.8px 8.8px -2.7px hsl(var(--color-shadow) / 0.31);
+  --shadow-elevation-high: 0.3px 0.3px 0.5px hsl(var(--color-shadow) / 0.32),
+    1.4px 1.5px 2.2px -0.4px hsl(var(--color-shadow) / 0.32),
+    2.7px 2.8px 4.3px -0.8px hsl(var(--color-shadow) / 0.31),
+    4.5px 4.7px 7.1px -1.2px hsl(var(--color-shadow) / 0.3),
+    7.2px 7.6px 11.5px -1.5px hsl(var(--color-shadow) / 0.3),
+    11.4px 12px 18.1px -1.9px hsl(var(--color-shadow) / 0.29),
+    17.5px 18.4px 27.8px -2.3px hsl(var(--color-shadow) / 0.29),
+    25.8px 27.2px 41.1px -2.7px hsl(var(--color-shadow) / 0.28);
 }
 
-
 body {
+  color: hsl(var(--color-text));
   background: rgb(var(--sky-rgb));
   background: linear-gradient(
-    86deg, 
-    rgba(var(--sky-rgb),0.55) 0%,
-    rgba(var(--lime-rgb),0.55) 70%
+    86deg,
+    hsl(var(--color-primary) / 0.55) 0%,
+    hsl(var(--color-secondary) / 0.55) 70%
   );
+}
+
+h1 {
+  font-size: var(--font-size-3xl);
+}
+
+h2 {
+  font-size: var(--font-size-2xl);
+}
+
+h3 {
+  font-size: var(--font-size-xl);
+}
+
+h4 {
+  font-size: var(--font-size-lg);
 }

@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { styled, keyframes } from 'styled-components';
@@ -7,6 +8,7 @@ import { charactersQuery } from '@/utils/queries';
 import useGraphQL from '@/utils/useGraphQL';
 import parsePageParam from '@/utils/parsePageParam';
 import CharacterCard from '@/components/CharacterCard';
+import PaginationCard from '@/components/PaginationCard';
 
 const Container = styled.div`
   display: flex;
@@ -43,6 +45,7 @@ const CharactersContainer = styled.div`
   gap: var(--space-md);
   justify-content: center;
   padding: var(--space-lg) var(--space-md);
+  margin-top: var(--space-lg);
   justify-items: center;
 `;
 
@@ -63,14 +66,32 @@ export default function Characters() {
           alt="Rick and Morty logo"
           priority
         />
-        <CharactersContainer>
-          {isLoading && <p>Loading...</p>}
-          {data?.characters?.results?.map(character =>
-            character ? (
-              <CharacterCard key={character.id} {...character} />
-            ) : null
-          )}
-        </CharactersContainer>
+        {data?.characters?.results && (
+          <CharactersContainer>
+            {data?.characters?.info?.prev && (
+              <PaginationCard
+                text="Previous Page"
+                href={`/?page=${data?.characters?.info?.prev}`}
+              />
+            )}
+            {data?.characters?.results?.map(character =>
+              character ? (
+                <CharacterCard
+                  {...character}
+                  key={character.id}
+                ></CharacterCard>
+              ) : null
+            )}
+            {data?.characters?.info?.next && (
+              <>
+                <PaginationCard
+                  text="Next Page"
+                  href={`/?page=${data?.characters?.info?.next}`}
+                />
+              </>
+            )}
+          </CharactersContainer>
+        )}
       </Container>
     </main>
   );

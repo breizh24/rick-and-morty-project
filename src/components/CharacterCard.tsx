@@ -2,11 +2,11 @@
 
 import { type Character } from '@/gql/graphql';
 import Image from 'next/image';
-import { styled } from 'styled-components';
+import { styled, keyframes } from 'styled-components';
 
 const cardHeight = 240;
 
-const Card = styled.div`
+export const Card = styled.div`
   cursor: pointer;
   overflow: hidden;
   border-radius: var(--border-radius);
@@ -23,11 +23,21 @@ const Card = styled.div`
   }
 `;
 
+const fadeIn = keyframes` 
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
 const Avatar = styled(Image)`
   object-position: center center;
   flex: 0 0 ${cardHeight}px;
   object-fit: cover;
   height: auto;
+  animation: ${fadeIn} 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 `;
 
 const InfoContainer = styled.div`

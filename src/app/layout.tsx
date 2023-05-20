@@ -1,9 +1,12 @@
 import './globals.css';
 import './reset.css';
-import { Inter } from 'next/font/google';
+import { Comic_Neue } from 'next/font/google';
 import Providers from './providers';
 
-const inter = Inter({ subsets: ['latin'] });
+const comicNue = Comic_Neue({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+});
 
 export const metadata = {
   title: 'Rick and Morty',
@@ -13,7 +16,7 @@ export const metadata = {
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={comicNue.className}>
         <Providers>{children}</Providers>
       </body>
     </html>

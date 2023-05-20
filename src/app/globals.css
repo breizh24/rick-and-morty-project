@@ -1,4 +1,25 @@
+:root {
+  --sky-rgb: 0, 181, 204;
+  --lime-rgb: 199, 245, 38;
+
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.3125rem;
+  --font-size-2xl: 1.5rem;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+}
+
+
 body {
-  background: rgb(98,164,171);
-  background: linear-gradient(86deg, rgba(98,164,171,0.93) 0%, rgba(249,183,152,0.54) 55%, rgba(249,191,30,0.65) 92%);
+  background: rgb(var(--sky-rgb));
+  background: linear-gradient(
+    86deg, 
+    rgba(var(--sky-rgb),0.55) 0%,
+    rgba(var(--lime-rgb),0.55) 70%
+  );
 }

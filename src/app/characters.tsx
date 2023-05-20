@@ -1,9 +1,11 @@
 'use client';
 
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import { styled, keyframes } from 'styled-components';
-import { charactersQuery, CHARACTERS_KEY } from '@/utils/queries';
+import { charactersQuery } from '@/utils/queries';
 import useGraphQL from '@/utils/useGraphQL';
+import parsePageParam from '@/utils/parsePageParam';
 
 const Main = styled.main`
   height: 100%;
@@ -41,7 +43,11 @@ const Logo = styled(Image)`
 `;
 
 export default function Characters() {
-  const { data, isLoading } = useGraphQL(charactersQuery, { page: 1 });
+  const searchParams = useSearchParams();
+
+  const page = parsePageParam(searchParams.get('page'));
+
+  const { data, isLoading } = useGraphQL(charactersQuery, { page: page || 1 });
 
   return (
     <Main>

@@ -5,20 +5,21 @@ import Image from 'next/image';
 import { styled, keyframes } from 'styled-components';
 
 const cardHeight = 240;
+export const cardMaxWidth = 560;
 
 export const Card = styled.div`
   cursor: pointer;
   overflow: hidden;
   border-radius: var(--border-radius);
-  border: 2px solid #000;
+  border: 2px solid var(--color-border);
   background-color: var(--color-card-bg);
   height: ${cardHeight}px;
   width: 100%;
-  max-width: 560px;
+  max-width: ${cardMaxWidth}px;
   box-shadow: var(--shadow-elevation-medium);
   display: flex;
   &:hover {
-    outline: 1px solid #000;
+    outline: 1px solid var(--color-border);
     box-shadow: var(--shadow-elevation-high);
   }
 `;
@@ -46,17 +47,20 @@ const InfoContainer = styled.div`
   min-width: 0;
 `;
 
-function CharacterCard(props: Pick<Character, 'id' | 'image' | 'name'>) {
+function CharacterCard({
+  name = 'Unknown name',
+  image,
+}: Pick<Character, 'id' | 'image' | 'name'>) {
   return (
     <Card>
       <Avatar
-        src={props.image || ''}
-        alt={props.name || ''}
+        src={image || '/placeholder-avatar.jpeg'}
+        alt={image ? `${name} avatar` : 'Placeholder avatar'}
         width={cardHeight}
         height={cardHeight}
       />
       <InfoContainer>
-        <h3>{props.name}</h3>
+        <h3>{name}</h3>
       </InfoContainer>
     </Card>
   );

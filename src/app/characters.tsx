@@ -2,21 +2,21 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { styled, keyframes } from 'styled-components';
 import { charactersQuery } from '@/utils/queries';
 import useGraphQL from '@/utils/useGraphQL';
 import parsePageParam from '@/utils/parsePageParam';
-import CharacterCard from '@/components/CharacterCard';
-import PaginationCard from '@/components/PaginationCard';
+import CharacterCard, { cardMaxWidth } from '@/components/CharacterCard';
+import Pagination from '@/components/Pagination';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  max-width: 1750px;
+  max-width: calc(${cardMaxWidth}px * 3 + var(--space-md) * 4);
   margin: 0 auto;
-  padding: var(--space-md) 0;
+  padding: var(--space-md);
 `;
 
 const scaleInCenter = keyframes`
@@ -39,22 +39,20 @@ const Logo = styled(Image)`
 `;
 
 const CharactersContainer = styled.div`
-  flex: 1;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(35rem, 100%), 1fr));
-  gap: var(--space-md);
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  padding: var(--space-lg) var(--space-md);
-  margin-top: var(--space-lg);
-  justify-items: center;
+  gap: var(--space-md);
+  padding: var(--space-lg) 0;
 `;
 
 export default function Characters() {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const page = parsePageParam(searchParams.get('page'));
 
-  const { data, isLoading } = useGraphQL(charactersQuery, { page: page || 1 });
+  const { data } = useGraphQL(charactersQuery, { page: page || 1 });
 
   return (
     <main>
@@ -66,32 +64,29 @@ export default function Characters() {
           alt="Rick and Morty logo"
           priority
         />
+        <Pagination
+          prev={data?.characters?.info?.prev}
+          next={data?.characters?.info?.next}
+          page={page}
+          lastPage={data?.characters?.info?.pages}
+          setPage={page => router.push(`?page=${page}`)}
+        />
         {data?.characters?.results && (
           <CharactersContainer>
-            {data?.characters?.info?.prev && (
-              <PaginationCard
-                text="Previous Page"
-                href={`/?page=${data?.characters?.info?.prev}`}
-              />
-            )}
             {data?.characters?.results?.map(character =>
               character ? (
-                <CharacterCard
-                  {...character}
-                  key={character.id}
-                ></CharacterCard>
+                <CharacterCard {...character} key={character.id} />
               ) : null
-            )}
-            {data?.characters?.info?.next && (
-              <>
-                <PaginationCard
-                  text="Next Page"
-                  href={`/?page=${data?.characters?.info?.next}`}
-                />
-              </>
             )}
           </CharactersContainer>
         )}
+        <Pagination
+          prev={data?.characters?.info?.prev}
+          next={data?.characters?.info?.next}
+          page={page}
+          lastPage={data?.characters?.info?.pages}
+          setPage={page => router.push(`?page=${page}`)}
+        />
       </Container>
     </main>
   );

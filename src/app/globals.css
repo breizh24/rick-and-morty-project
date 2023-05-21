@@ -6,6 +6,8 @@
   --color-shadow: 123deg 26% 53%;
 
   --color-card-bg: hsl(var(--color-primary) / 0.83);
+  --color-pagination-bg: hsl(var(--color-secondary) / 0.83);
+  --color-border: hsl(0 0% 0%);
 
   --font-size-sm: 0.875rem;
   --font-size-md: 1rem;
@@ -19,7 +21,7 @@
   --space-md: 16px;
   --space-lg: 24px;
 
-  --border-radius: 6px;
+  --border-radius: 12px;
 
   --shadow-logo: 1px 1px 0.5px hsl(var(--color-shadow) / 0.65);
   --shadow-elevation-medium: 0.3px 0.3px 0.5px hsl(var(--color-shadow) / 0.35),

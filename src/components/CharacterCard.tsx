@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { type Character } from '@/gql/graphql';
 import Image from 'next/image';
 import { styled, keyframes } from 'styled-components';
@@ -7,21 +8,38 @@ import { styled, keyframes } from 'styled-components';
 const cardHeight = 240;
 export const cardMaxWidth = 560;
 
-export const Card = styled.div`
+const Card = styled.div<{ flipped: boolean }>`
+  width: 560px;
+  height: ${cardHeight}px;
+  min-width: 0;
+  max-width: ${cardMaxWidth}px;
   cursor: pointer;
+  position: relative;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  transform: ${props => (props.flipped ? 'rotateX(180deg)' : 'none')};
+`;
+
+const CardFront = styled.div`
   overflow: hidden;
+  position: absolute;
   border-radius: var(--border-radius);
   border: 2px solid var(--color-border);
-  background-color: var(--color-card-bg);
-  height: ${cardHeight}px;
-  width: 100%;
-  max-width: ${cardMaxWidth}px;
-  box-shadow: var(--shadow-elevation-medium);
   display: flex;
+  height: 100%;
+  width: 100%;
+  backface-visibility: hidden;
+  background: var(--color-card-bg-front);
+  box-shadow: var(--shadow-elevation-medium);
   &:hover {
     outline: 1px solid var(--color-border);
     box-shadow: var(--shadow-elevation-high);
   }
+`;
+
+const CardBack = styled(CardFront)`
+  transform: rotateX(180deg);
+  background: var(--color-card-bg-back);
 `;
 
 const fadeIn = keyframes` 
@@ -51,17 +69,30 @@ function CharacterCard({
   name = 'Unknown name',
   image,
 }: Pick<Character, 'id' | 'image' | 'name'>) {
+  const [flipped, setFlipped] = React.useState(false);
+
   return (
-    <Card>
-      <Avatar
-        src={image || '/placeholder-avatar.jpeg'}
-        alt={image ? `${name} avatar` : 'Placeholder avatar'}
-        width={cardHeight}
-        height={cardHeight}
-      />
-      <InfoContainer>
-        <h3>{name}</h3>
-      </InfoContainer>
+    <Card
+      flipped={flipped}
+      role="button"
+      onClick={() => setFlipped(prev => !prev)}
+    >
+      <CardFront>
+        <Avatar
+          src={image || '/placeholder-avatar.jpeg'}
+          alt={image ? `${name} avatar` : 'Placeholder avatar'}
+          width={cardHeight}
+          height={cardHeight}
+        />
+        <InfoContainer>
+          <h3>{name}</h3>
+        </InfoContainer>
+      </CardFront>
+      <CardBack>
+        <InfoContainer>
+          <h3>{name}</h3>
+        </InfoContainer>
+      </CardBack>
     </Card>
   );
 }

@@ -1,11 +1,14 @@
 :root {
   --color-primary: 187deg 100% 40%;
   --color-secondary: 73deg 91% 55%;
+  --color-tertiary: 181deg 85% 72%;
   --color-text: 0deg 0% 20%;
 
   --color-shadow: 123deg 26% 53%;
 
-  --color-card-bg: hsl(var(--color-primary) / 0.83);
+  --color-card-bg-front: hsl(var(--color-primary) / 0.8);
+  --color-card-bg-back: hsl(var(--color-tertiary) / 0.6);
+
   --color-pagination-bg: hsl(var(--color-secondary) / 0.83);
   --color-border: hsl(0 0% 0%);
 
@@ -40,6 +43,9 @@
 
 body {
   color: hsl(var(--color-text));
+}
+
+main {
   background: rgb(var(--sky-rgb));
   background: linear-gradient(
     86deg,

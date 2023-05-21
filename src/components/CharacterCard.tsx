@@ -8,7 +8,7 @@ import { styled, keyframes } from 'styled-components';
 const cardHeight = 240;
 export const cardMaxWidth = 560;
 
-const Card = styled.div<{ flipped: boolean }>`
+const Card = styled.div<{ $flipped: boolean }>`
   width: 560px;
   height: ${cardHeight}px;
   min-width: 0;
@@ -17,7 +17,11 @@ const Card = styled.div<{ flipped: boolean }>`
   position: relative;
   transition: transform 1s;
   transform-style: preserve-3d;
-  transform: ${props => (props.flipped ? 'rotateX(180deg)' : 'none')};
+  transform: ${props => (props.$flipped ? 'rotateX(180deg)' : 'none')};
+  border-radius: var(--border-radius);
+  &:focus {
+    outline: 1px solid var(--color-border);
+  }
 `;
 
 const CardFront = styled.div`
@@ -71,11 +75,21 @@ function CharacterCard({
 }: Pick<Character, 'id' | 'image' | 'name'>) {
   const [flipped, setFlipped] = React.useState(false);
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setFlipped(prev => !prev);
+    }
+  };
+
   return (
     <Card
-      flipped={flipped}
+      $flipped={flipped}
       role="button"
+      tabIndex={0}
       onClick={() => setFlipped(prev => !prev)}
+      onKeyDown={onKeyDown}
+      aria-label="Click to flip card"
     >
       <CardFront>
         <Avatar

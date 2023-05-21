@@ -20,6 +20,9 @@ const PaginationButton = styled.button`
     outline: 1px solid var(--color-border);
     cursor: pointer;
   }
+  &:focus {
+    outline: 1px solid var(--color-border);
+  }
 `;
 
 const PaginationButtonContainer = styled.div`

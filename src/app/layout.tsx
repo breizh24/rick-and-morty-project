@@ -1,11 +1,18 @@
 import './globals.css';
 import './reset.css';
-import { Comic_Neue } from 'next/font/google';
+import { Comic_Neue, Noto_Sans_Mono } from 'next/font/google';
 import Providers from './providers';
 
-const comicNue = Comic_Neue({
+export const comicNue = Comic_Neue({
   weight: ['400', '700'],
   subsets: ['latin'],
+  display: 'swap',
+});
+
+export const notoSansMono = Noto_Sans_Mono({
+  weight: ['400'],
+  subsets: ['latin'],
+  display: 'swap',
 });
 
 export const metadata = {
@@ -16,7 +23,7 @@ export const metadata = {
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="en">
-      <body className={comicNue.className}>
+      <body>
         <Providers>{children}</Providers>
       </body>
     </html>

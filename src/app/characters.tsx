@@ -53,6 +53,7 @@ export default function Characters() {
   const page = parsePageParam(searchParams.get('page'));
 
   const { data } = useGraphQL(charactersQuery, { page: page || 1 });
+  console.log(data);
 
   return (
     <main>

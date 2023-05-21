@@ -7,13 +7,32 @@ export const charactersQuery = graphql(/* GraphQL */ `
     characters(page: $page) {
       info {
         pages
-        next
         prev
+        next
       }
       results {
         id
-        name
         image
+        name
+        status
+        species
+        gender
+        type
+        origin {
+          id
+          name
+          type
+          residents {
+            id
+          }
+        }
+        location {
+          id
+          name
+        }
+        episode {
+          name
+        }
       }
     }
   }

@@ -136,6 +136,7 @@ const DiscoverMoreLink = styled(Link)`
 `;
 
 function CharacterCard({
+  id,
   name = 'Unknown name',
   image,
   gender,
@@ -147,6 +148,7 @@ function CharacterCard({
   type,
 }: Pick<
   Character,
+  | 'id'
   | 'name'
   | 'image'
   | 'gender'
@@ -226,6 +228,9 @@ function CharacterCard({
               {pluralize('episode', episode?.length)}.
             </Paragraph>
           </InfoSection>
+          <DiscoverMoreLink href={`/characters/${id}`}>
+            Discover more
+          </DiscoverMoreLink>
         </InfoContainer>
       </CardBack>
     </Card>

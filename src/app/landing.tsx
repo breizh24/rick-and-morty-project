@@ -46,14 +46,13 @@ const CharactersContainer = styled.div`
   padding: var(--space-lg) 0;
 `;
 
-export default function Characters() {
+export default function Landing() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const page = parsePageParam(searchParams.get('page'));
 
   const { data } = useGraphQL(charactersQuery, { page: page || 1 });
-  console.log(data);
 
   return (
     <main>

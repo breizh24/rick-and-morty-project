@@ -14,6 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  query characters($page: Int!) {\n    characters(page: $page) {\n      info {\n        pages\n        prev\n        next\n      }\n      results {\n        id\n        image\n        name\n        status\n        species\n        gender\n        type\n        origin {\n          id\n          name\n          type\n          residents {\n            id\n          }\n        }\n        location {\n          id\n          name\n        }\n        episode {\n          name\n        }\n      }\n    }\n  }\n": types.CharactersDocument,
+    "\n  query characterById($id: ID!) {\n    character(id: $id) {\n      id\n      image\n      name\n      status\n      species\n      gender\n      type\n      origin {\n        id\n        name\n        type\n        residents {\n          id\n        }\n      }\n      location {\n        id\n        name\n      }\n      episode {\n        name\n      }\n    }\n  }\n": types.CharacterByIdDocument,
 };
 
 /**
@@ -34,6 +35,10 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query characters($page: Int!) {\n    characters(page: $page) {\n      info {\n        pages\n        prev\n        next\n      }\n      results {\n        id\n        image\n        name\n        status\n        species\n        gender\n        type\n        origin {\n          id\n          name\n          type\n          residents {\n            id\n          }\n        }\n        location {\n          id\n          name\n        }\n        episode {\n          name\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query characters($page: Int!) {\n    characters(page: $page) {\n      info {\n        pages\n        prev\n        next\n      }\n      results {\n        id\n        image\n        name\n        status\n        species\n        gender\n        type\n        origin {\n          id\n          name\n          type\n          residents {\n            id\n          }\n        }\n        location {\n          id\n          name\n        }\n        episode {\n          name\n        }\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query characterById($id: ID!) {\n    character(id: $id) {\n      id\n      image\n      name\n      status\n      species\n      gender\n      type\n      origin {\n        id\n        name\n        type\n        residents {\n          id\n        }\n      }\n      location {\n        id\n        name\n      }\n      episode {\n        name\n      }\n    }\n  }\n"): (typeof documents)["\n  query characterById($id: ID!) {\n    character(id: $id) {\n      id\n      image\n      name\n      status\n      species\n      gender\n      type\n      origin {\n        id\n        name\n        type\n        residents {\n          id\n        }\n      }\n      location {\n        id\n        name\n      }\n      episode {\n        name\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

@@ -1,6 +1,9 @@
 import { graphql } from '@/gql';
 
-export const CHARACTERS_KEY = 'characters' as const;
+export const charactersPaginatedKey = (page: number) =>
+  ['characters', { page }] as const;
+
+export const characterByIdKey = (id: string) => ['character', { id }] as const;
 
 export const charactersQuery = graphql(/* GraphQL */ `
   query characters($page: Int!) {
@@ -33,6 +36,35 @@ export const charactersQuery = graphql(/* GraphQL */ `
         episode {
           name
         }
+      }
+    }
+  }
+`);
+
+export const characterByIdQuery = graphql(/* GraphQL */ `
+  query characterById($id: ID!) {
+    character(id: $id) {
+      id
+      image
+      name
+      status
+      species
+      gender
+      type
+      origin {
+        id
+        name
+        type
+        residents {
+          id
+        }
+      }
+      location {
+        id
+        name
+      }
+      episode {
+        name
       }
     }
   }

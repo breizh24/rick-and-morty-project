@@ -1,8 +1,8 @@
 import { dehydrate, Hydrate } from '@tanstack/react-query';
 import getQueryClient from '@/utils/getQueryClient';
 import { graphQlRequest } from '@/utils/useGraphQL';
-import { charactersQuery, CHARACTERS_KEY } from '@/utils/queries';
-import Characters from './characters';
+import { charactersQuery, charactersPaginatedKey } from '@/utils/queries';
+import Landing from './landing';
 import parsePageParam from '@/utils/parsePageParam';
 import { redirect } from 'next/navigation';
 import { type Query } from '@/gql/graphql';
@@ -20,14 +20,12 @@ export default async function Home({ searchParams }: Props) {
   }
 
   const queryClient = getQueryClient();
-  await queryClient.prefetchQuery([CHARACTERS_KEY, { page }], () =>
+  await queryClient.prefetchQuery(charactersPaginatedKey(page), () =>
     graphQlRequest(charactersQuery, { page })
   );
-  const data = queryClient.getQueryData<Pick<Query, 'characters'>>([
-    CHARACTERS_KEY,
-    { page },
-  ]);
-  const dehydratedState = dehydrate(queryClient);
+  const data = queryClient.getQueryData<Pick<Query, 'characters'>>(
+    charactersPaginatedKey(page)
+  );
 
   // when there is no data in the response, redirect to the first page
   // the api returns an empty array when the page param is greater than the total number of pages
@@ -35,9 +33,11 @@ export default async function Home({ searchParams }: Props) {
     redirect(`/?page=1`);
   }
 
+  const dehydratedState = dehydrate(queryClient);
+
   return (
     <Hydrate state={dehydratedState}>
-      <Characters />
+      <Landing />
     </Hydrate>
   );
 }

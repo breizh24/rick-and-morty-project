@@ -8,11 +8,12 @@ import { fadeInKeyFrames } from '@/utils/animations';
 import Link from 'next/link';
 import pluralize from '@/utils/pluralize';
 import CharacterStatus from './CharacterStatus';
+import useRect from '@/utils/useRect';
 
 const cardHeight = 240;
 export const cardMaxWidth = 560;
 
-const Card = styled.div<{ $flipped: boolean }>`
+const Card = styled.div<{ $flipped: boolean; $height: number | undefined }>`
   width: 560px;
   height: ${cardHeight}px;
   min-width: 0;
@@ -29,6 +30,7 @@ const Card = styled.div<{ $flipped: boolean }>`
   @media screen and (max-width: 37rem) {
     width: 100%;
     min-height: 480px;
+    height: ${props => (props.$height ? props.$height + cardHeight : '')}px;
   }
 `;
 
@@ -63,7 +65,7 @@ const AvatarContainer = styled.div`
   width: 240px;
   @media screen and (max-width: 37rem) {
     width: 100%;
-    height: 240px;
+    height: ${cardHeight}px;
   }
 `;
 
@@ -130,6 +132,11 @@ function CharacterCard({
   | 'type'
 >) {
   const [flipped, setFlipped] = React.useState(false);
+  const cardInfoRef = React.useRef<HTMLDivElement>(null);
+
+  // Used to calculate the height of the card on mobile based on the info container
+  // Needed because the info container is absolutely positioned for the flip animation
+  const cardInfoRect = useRect(cardInfoRef);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -147,6 +154,7 @@ function CharacterCard({
   return (
     <Card
       $flipped={flipped}
+      $height={cardInfoRect?.height}
       role="button"
       tabIndex={0}
       onClick={onCardClick}
@@ -167,7 +175,7 @@ function CharacterCard({
             </CharacterStatus>
           </StatusContainer>
         </AvatarContainer>
-        <InfoContainer>
+        <InfoContainer ref={cardInfoRef}>
           <h3>{name}</h3>
           <section>
             <InfoText>

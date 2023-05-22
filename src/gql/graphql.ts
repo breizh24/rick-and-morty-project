@@ -241,11 +241,11 @@ export type CharactersQuery = {
   } | null;
 };
 
-export type CharacterByIdQueryVariables = Exact<{
+export type CharacterQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-export type CharacterByIdQuery = {
+export type CharacterQuery = {
   __typename?: 'Query';
   character?: {
     __typename?: 'Character';
@@ -417,13 +417,13 @@ export const CharactersDocument = {
     },
   ],
 } as unknown as DocumentNode<CharactersQuery, CharactersQueryVariables>;
-export const CharacterByIdDocument = {
+export const CharacterDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'characterById' },
+      name: { kind: 'Name', value: 'character' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
@@ -513,4 +513,4 @@ export const CharacterByIdDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<CharacterByIdQuery, CharacterByIdQueryVariables>;
+} as unknown as DocumentNode<CharacterQuery, CharacterQueryVariables>;

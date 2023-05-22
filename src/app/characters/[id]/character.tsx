@@ -4,7 +4,9 @@ import { styled } from 'styled-components';
 import { characterByIdQuery } from '@/utils/queries';
 import useGraphQL from '@/utils/useGraphQL';
 import { useParams } from 'next/navigation';
+import { fadeInKeyFrames } from '@/utils/animations';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -20,6 +22,7 @@ const CharacterContent = styled.div`
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-elevation-medium);
   border: 2px solid var(--color-border);
+  margin-top: var(--space-sm);
 `;
 
 const InfoSection = styled.section`
@@ -29,15 +32,27 @@ const InfoSection = styled.section`
 
 const Avatar = styled(Image)`
   border-radius: var(--border-radius-sm);
+  animation: ${fadeInKeyFrames} 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+`;
+
+const LinkToHome = styled(Link)`
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: var(--font-size-lg);
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 export default function Character() {
   const params = useParams();
   const { data } = useGraphQL(characterByIdQuery, { id: params.id || '1' });
+  console.log(data);
 
   return (
     <main>
       <Container>
+        <LinkToHome href="/?page=1">{`Back to Home`}</LinkToHome>
         <CharacterContent>
           <InfoSection>
             <Avatar

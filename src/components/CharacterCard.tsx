@@ -3,7 +3,8 @@
 import React from 'react';
 import { type Character } from '@/gql/graphql';
 import Image from 'next/image';
-import { styled, keyframes } from 'styled-components';
+import { styled } from 'styled-components';
+import { fadeInKeyFrames } from '@/utils/animations';
 import Link from 'next/link';
 import pluralize from '@/utils/pluralize';
 
@@ -55,15 +56,6 @@ const CardBack = styled(CardFront)`
   background: var(--color-card-bg-back);
 `;
 
-const fadeIn = keyframes` 
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
-
 const AvatarContainer = styled.div`
   position: relative;
   height: 100%;
@@ -77,7 +69,7 @@ const AvatarContainer = styled.div`
 const Avatar = styled(Image)`
   object-position: center center;
   object-fit: cover;
-  animation: ${fadeIn} 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: ${fadeInKeyFrames} 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
   @media screen and (max-width: 37rem) {
     width: 100%;
     object-position: top center;

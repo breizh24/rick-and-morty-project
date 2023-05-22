@@ -11,6 +11,11 @@ interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
+export const metadata = {
+  title: 'Rick and Morty',
+  description: 'Rick and Morty characters',
+};
+
 export default async function Home({ searchParams }: Props) {
   const page = parsePageParam(searchParams.page);
 

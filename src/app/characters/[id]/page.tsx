@@ -6,13 +6,25 @@ import parsePageParam from '@/utils/parsePageParam';
 import { redirect } from 'next/navigation';
 import { type Query } from '@/gql/graphql';
 import Character from './character';
+import { Metadata } from 'next';
 
-interface Props {
+type Props = {
   params: { id: string };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const id = params.id;
+
+  const data = await graphQlRequest(characterByIdQuery, { id });
+  const characterName = data.character?.name || 'Character';
+
+  return {
+    title: characterName,
+    description: `${characterName} profile`,
+  };
 }
 
 export default async function CharacterPage({ params }: Props) {
-  console.log(params);
   const characterId = parsePageParam(params.id);
 
   // in case the id param is not valid or not provided, redirect to the first page
@@ -29,7 +41,6 @@ export default async function CharacterPage({ params }: Props) {
   const data = queryClient.getQueryData<Pick<Query, 'character'>>(
     characterByIdKey(stringId)
   );
-  console.log(data);
 
   // when there is no data in the response, redirect to home
   if (!data?.character) {

@@ -15,11 +15,6 @@ export const notoSansMono = Noto_Sans_Mono({
   display: 'swap',
 });
 
-export const metadata = {
-  title: 'Rick and Morty',
-  description: 'Rick and Morty characters',
-};
-
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="en">

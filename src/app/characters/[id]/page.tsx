@@ -49,5 +49,9 @@ export default async function CharacterPage({ params }: Props) {
 
   const dehydratedState = dehydrate(queryClient);
 
-  return <Hydrate state={dehydratedState}>{<Character />}</Hydrate>;
+  return (
+    <Hydrate state={dehydratedState}>
+      <Character />
+    </Hydrate>
+  );
 }

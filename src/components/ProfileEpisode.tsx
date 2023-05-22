@@ -30,15 +30,12 @@ function ProfileEpisode({ episode, charactedId }: Props) {
             ?.filter(character => character?.id !== charactedId)
             .map((character, index) => {
               return (
-                <>
-                  <Link
-                    key={character?.id}
-                    href={`/characters/${character?.id}`}
-                  >
+                <React.Fragment key={character?.id}>
+                  <Link href={`/characters/${character?.id}`}>
                     {character?.name}
                   </Link>
                   {episode?.characters?.length === index + 2 ? '.' : ', '}
-                </>
+                </React.Fragment>
               );
             })}
       </EpisodeInfo>

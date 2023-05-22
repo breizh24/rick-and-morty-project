@@ -62,9 +62,18 @@ export const characterByIdQuery = graphql(/* GraphQL */ `
       location {
         id
         name
+        residents {
+          id
+        }
       }
       episode {
+        id
         name
+        air_date
+        characters {
+          id
+          name
+        }
       }
     }
   }

@@ -267,8 +267,19 @@ export type CharacterQuery = {
       __typename?: 'Location';
       id?: string | null;
       name?: string | null;
+      residents: Array<{ __typename?: 'Character'; id?: string | null } | null>;
     } | null;
-    episode: Array<{ __typename?: 'Episode'; name?: string | null } | null>;
+    episode: Array<{
+      __typename?: 'Episode';
+      id?: string | null;
+      name?: string | null;
+      air_date?: string | null;
+      characters: Array<{
+        __typename?: 'Character';
+        id?: string | null;
+        name?: string | null;
+      } | null>;
+    } | null>;
   } | null;
 };
 
@@ -493,6 +504,19 @@ export const CharacterDocument = {
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'residents' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' },
+                            },
+                          ],
+                        },
+                      },
                     ],
                   },
                 },
@@ -502,7 +526,29 @@ export const CharacterDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'air_date' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'characters' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'name' },
+                            },
+                          ],
+                        },
+                      },
                     ],
                   },
                 },

@@ -7,6 +7,7 @@ import { styled } from 'styled-components';
 import { fadeInKeyFrames } from '@/utils/animations';
 import Link from 'next/link';
 import pluralize from '@/utils/pluralize';
+import CharacterStatus from './CharacterStatus';
 
 const cardHeight = 240;
 export const cardMaxWidth = 560;
@@ -84,37 +85,14 @@ const StatusContainer = styled.div`
   left: var(--space-sm);
 `;
 
-const Status = styled.span<{ $status: string }>`
-  padding: var(--space-xs);
-  text-transform: capitalize;
-  border-radius: var(--border-radius-sm);
-  border: 2px solid var(--color-border);
-  background: ${props =>
-    props.$status === 'Alive'
-      ? 'hsl(112deg 77% 64%)'
-      : props.$status === 'Dead'
-      ? 'hsl(5deg 99% 64%)'
-      : 'hsl(0deg 1% 78%)'};
-  margin-right: var(--space-xs);
-`;
-
 const InfoContainer = styled.div`
   padding: var(--space-xs) var(--space-sm);
   flex: 1;
   min-width: 0;
 `;
 
-const InfoSection = styled.section`
-  margin-bottom: var(--space-sm);
-`;
-
 const InfoText = styled.span`
   text-transform: capitalize;
-`;
-
-const SectionTitle = styled.h4`
-  text-transform: uppercase;
-  font-family: 'Noto Sans Mono', monospace;
 `;
 
 const Paragraph = styled.p`
@@ -155,9 +133,15 @@ function CharacterCard({
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter' || e.key === ' ') {
+      if ((e.target as HTMLElement).closest('a')) return;
       e.preventDefault();
       setFlipped(prev => !prev);
     }
+  };
+
+  const onCardClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if ((e.target as HTMLElement).closest('a')) return;
+    setFlipped(prev => !prev);
   };
 
   return (
@@ -165,7 +149,7 @@ function CharacterCard({
       $flipped={flipped}
       role="button"
       tabIndex={0}
-      onClick={() => setFlipped(prev => !prev)}
+      onClick={onCardClick}
       onKeyDown={onKeyDown}
       aria-label="Click to flip card"
     >
@@ -178,31 +162,33 @@ function CharacterCard({
             height={cardHeight}
           />
           <StatusContainer>
-            <Status $status={status || 'unknown'}>{status || 'unknown'}</Status>
+            <CharacterStatus $status={status || 'unknown'}>
+              {status || 'unknown'}
+            </CharacterStatus>
           </StatusContainer>
         </AvatarContainer>
         <InfoContainer>
           <h3>{name}</h3>
-          <InfoSection>
+          <section>
             <InfoText>
               {gender} - {species}
             </InfoText>
-          </InfoSection>
-          <InfoSection>
-            <SectionTitle>Origin</SectionTitle>
+          </section>
+          <section>
+            <h4>Origin</h4>
             <InfoText>{origin?.name}</InfoText>
-          </InfoSection>
-          <InfoSection>
-            <SectionTitle>Last known location</SectionTitle>
+          </section>
+          <section>
+            <h4>Last known location</h4>
             <InfoText>{location?.name}</InfoText>
-          </InfoSection>
+          </section>
         </InfoContainer>
       </CardFront>
       <CardBack>
         <InfoContainer>
           <h3>{name}</h3>
-          <InfoSection>
-            <SectionTitle>Bio</SectionTitle>
+          <section>
+            <h4>Bio</h4>
             <Paragraph>
               {type ? `This is a ${type}, ` : ''}
               {`${
@@ -219,7 +205,7 @@ function CharacterCard({
               This character has been in {episode?.length}{' '}
               {pluralize('episode', episode?.length)}.
             </Paragraph>
-          </InfoSection>
+          </section>
           <DiscoverMoreLink href={`/characters/${id}`}>
             Discover more
           </DiscoverMoreLink>

@@ -42,7 +42,7 @@
     25.8px 27.2px 41.1px -2.7px hsl(var(--color-shadow) / 0.28);
 }
 
-html {
+html, a {
   font-family: 'Comic Neue', cursive;
 }
 
@@ -66,6 +66,12 @@ h3 {
 
 h4 {
   font-size: var(--font-size-lg);
+  text-transform: uppercase;
+  font-family: 'Noto Sans Mono', monospace;
+}
+
+section {
+  margin-bottom: var(--space-sm);
 }
 
 span {

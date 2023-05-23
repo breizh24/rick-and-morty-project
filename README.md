@@ -14,6 +14,8 @@ To start the project in production mode:
 
 ## Start the Project in Dev Mode
 
+To start the project in dev mode:
+
 - Install the dependencies with `npm install`
 
 - Start the dev server with `npm run dev`

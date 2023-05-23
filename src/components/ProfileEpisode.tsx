@@ -1,7 +1,7 @@
 import React from 'react';
 import { Episode } from '@/gql/graphql';
 import { styled } from 'styled-components';
-import Link from 'next/link';
+import InternalLink from '@/components/InternalLink';
 
 interface Props {
   episode: Episode;
@@ -31,9 +31,9 @@ function ProfileEpisode({ episode, charactedId }: Props) {
             .map((character, index) => {
               return (
                 <React.Fragment key={character?.id}>
-                  <Link href={`/characters/${character?.id}`}>
+                  <InternalLink href={`/characters/${character?.id}`}>
                     {character?.name}
-                  </Link>
+                  </InternalLink>
                   {episode?.characters?.length === index + 2 ? '.' : ', '}
                 </React.Fragment>
               );

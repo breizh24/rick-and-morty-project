@@ -43,7 +43,7 @@
 }
 
 html, a {
-  font-family: 'Comic Neue', cursive;
+  font-family: var(--font-comic-neue);
 }
 
 body {
@@ -67,7 +67,7 @@ h3 {
 h4 {
   font-size: var(--font-size-lg);
   text-transform: uppercase;
-  font-family: 'Noto Sans Mono', monospace;
+  font-family: var(--font-noto-sans-mono);
 }
 
 section {

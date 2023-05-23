@@ -4,9 +4,8 @@ import { styled } from 'styled-components';
 import { characterByIdQuery } from '@/utils/queries';
 import useGraphQL from '@/utils/useGraphQL';
 import { useParams } from 'next/navigation';
-import Link from 'next/link';
+import InternalLink from '@/components/InternalLink';
 import CharacterProfile from '@/components/CharacterProfile';
-import Head from 'next/head';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -15,7 +14,7 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const LinkToHome = styled(Link)`
+const LinkToHome = styled(InternalLink)`
   color: var(--color-text);
   text-decoration: none;
   font-size: var(--font-size-lg);

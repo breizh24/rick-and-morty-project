@@ -5,7 +5,7 @@ import { type Character } from '@/gql/graphql';
 import Image from 'next/image';
 import { styled } from 'styled-components';
 import { fadeInKeyFrames } from '@/utils/animations';
-import Link from 'next/link';
+import InternalLink from './InternalLink';
 import pluralize from '@/utils/pluralize';
 import CharacterStatus from './CharacterStatus';
 import useRect from '@/utils/useRect';
@@ -95,16 +95,19 @@ const InfoContainer = styled.div`
 
 const InfoText = styled.span`
   text-transform: capitalize;
+  font-size: var(--font-size-lg);
 `;
 
 const Paragraph = styled.p`
   margin-bottom: var(--space-sm);
+  font-size: var(--font-size-lg);
 `;
 
-const DiscoverMoreLink = styled(Link)`
+const DiscoverMoreLink = styled(InternalLink)`
   font-style: italic;
   text-decoration: underline;
   color: var(--color-text);
+  font-size: var(--font-size-lg);
 `;
 
 function CharacterCard({

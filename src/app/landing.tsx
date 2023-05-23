@@ -9,6 +9,7 @@ import useGraphQL from '@/utils/useGraphQL';
 import parsePageParam from '@/utils/parsePageParam';
 import CharacterCard, { cardMaxWidth } from '@/components/CharacterCard';
 import Pagination from '@/components/Pagination';
+import { NProgressContext } from '@/utils/NProgressContext';
 
 const Container = styled.div`
   display: flex;
@@ -49,10 +50,19 @@ const CharactersContainer = styled.div`
 export default function Landing() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const nPropgress = React.useContext(NProgressContext);
 
   const page = parsePageParam(searchParams.get('page'));
 
   const { data } = useGraphQL(charactersQuery, { page: page || 1 });
+
+  const setPage = React.useCallback(
+    (page: number) => {
+      nPropgress?.start();
+      router.push(`?page=${page}`);
+    },
+    [nPropgress, router]
+  );
 
   return (
     <main>
@@ -69,13 +79,13 @@ export default function Landing() {
           next={data?.characters?.info?.next}
           page={page}
           lastPage={data?.characters?.info?.pages}
-          setPage={page => router.push(`?page=${page}`)}
+          setPage={setPage}
         />
         {data?.characters?.results && (
           <CharactersContainer>
             {data?.characters?.results?.map(character =>
               character ? (
-                <CharacterCard {...character} key={character.id} />
+                <CharacterCard key={character.id} {...character} />
               ) : null
             )}
           </CharactersContainer>
@@ -85,7 +95,7 @@ export default function Landing() {
           next={data?.characters?.info?.next}
           page={page}
           lastPage={data?.characters?.info?.pages}
-          setPage={page => router.push(`?page=${page}`)}
+          setPage={setPage}
         />
       </Container>
     </main>

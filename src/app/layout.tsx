@@ -4,6 +4,7 @@ import './nprogress.css';
 import { Comic_Neue, Noto_Sans_Mono } from 'next/font/google';
 import Providers from './providers';
 import { NprogressProvider } from '@/utils/NProgressContext';
+import { Analytics } from '@vercel/analytics/react';
 
 export const comicNue = Comic_Neue({
   weight: ['400', '700'],
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
         <NprogressProvider>
           <Providers>{children}</Providers>
         </NprogressProvider>
+        <Analytics />
       </body>
     </html>
   );
